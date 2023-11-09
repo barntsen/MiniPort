@@ -41,7 +41,7 @@ int Modeld(float *d, float dx, int nb, int n);
 
 
 struct model *ModelNew(float *vp, float *rho, float *Q, 
-                      float Dx, float Dt, float W0, int Nb, int Rheol, int Nx, int Ny)
+          float Dx, float Dt, float W0, int Nb, int Rheol, int Nx, int Ny)
 {
   struct model *m;
 

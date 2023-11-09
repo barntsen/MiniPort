@@ -184,7 +184,7 @@ int Ac2dSolve(struct ac2d *Ac2d, struct model *Model, struct src *Src,
     }
 
     // Record snapshot
-    if(Rec->recon == OK){
+    if(Rec->snpon == OK){
       RecSnap(Rec,i,Ac2d->p,Nx,Ny);
     }
   }

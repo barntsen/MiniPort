@@ -1,6 +1,10 @@
+// Ac2dmod - mini application for testing
+// unified memory on AMD GPU's 
+
+
 
 extern "C" {
-  #include <stdio.h>  
+  #include <stdio.h>                 /* Library interface                 */
   #include <stdlib.h>
 }
 #include "util.h"
@@ -9,8 +13,8 @@ extern "C" {
 #include "rec.h"
 #include "ac2d.h"
 
-int NBLOCKS;
 int NTHREADS;
+int NBLOCKS;
 
 int main()
 {
@@ -44,8 +48,8 @@ int main()
 
   t0 = Clock();
   // Main modeling parameters
-  Nx=251; // x-dimensiom
-  Ny=251; // y-dimension
+  Nx=256; // x-dimensiom
+  Ny=256; // y-dimension
   dx=5.0; // grid interval
   dt=0.0005; // Time sampling
   nt=1501;   // No of timesteps
@@ -54,8 +58,9 @@ int main()
   W0=f0*3.14159*2.0; // Central angular frequency
   Nb = 30;             // Border for PML attenuation
   Rheol = MAXWELL;
+
   NTHREADS=128;
-  NBLOCKS = (Nx*Ny)/NTHREADS;
+  NBLOCKS=(Nx*Ny)/NTHREADS;
 
   // Read the velocity model
   fd=fopen("vp.bin","r");
@@ -96,21 +101,22 @@ int main()
   fflush(stderr);
 
   // Create a receiver
-  Nr=251;
+  Nr=Nx;
   rx=(int*)malloc(sizeof(int)*Nr);
   ry=(int*)malloc(sizeof(int)*Nr);
   rx0=0;
   for(i=0; i<Nr; i=i+1){
-    rx[i] = rx0;
+    rx[i] = i;
     ry[i] = 50;
-    rx0=rx0+1;
   }
   resamp=1;   //Output receiver sampling
-  sresamp=0; //Output snapshot resampling
+  sresamp=10; //Output snapshot resampling
   ntr = nt/resamp; //No of output samples per rec
 
   char snpfile [] ="snp.bin";
   Rec= RecNew(rx,ry,ntr,resamp,sresamp,snpfile,Nr);
+  Rec->snpon =ERR;
+  Rec->recon =OK;
 
   /* Create solver    */
   Ac2d = Ac2dNew(Model);
@@ -125,12 +131,12 @@ int main()
 
 
   printf("Nx : %d \n", Nx);
-  printf("Nt : %d \n", Ny);
+  printf("Ny : %d \n", Ny);
   printf("Nt : %d \n", nt);
   printf("Solver time : %f \n",Clock()-t1); 
   printf("Wall   time : %f \n",Clock()-t0); 
-  printf("nb : %d \n", NBLOCKS);
-  printf("nt : %d \n", NTHREADS);
+  printf("nbl : %d \n", NBLOCKS);
+  printf("nth : %d \n", NTHREADS);
   fflush(stdout);
 
   return(OK);

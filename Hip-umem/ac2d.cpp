@@ -1,5 +1,5 @@
 #include "hip/hip_runtime.h"
-// Ac2d object
+// Ac2d object methods
 
 // Imports
 extern "C"
@@ -22,12 +22,15 @@ extern "C"
   void Ac2dstress(struct ac2d *Ac2d, struct model *Model);
   __global__ void ac2dvx(float *Rho, float *exx, float *vx, float *thetax, float *Drhox,
                          float *Eta1x, float *Eta2x, float Dt, int nx, int ny);
+
   __global__ void ac2dvy(float *Rho, float *eyy, float *vy, float *thetay, float *Drhoy,
                          float *Eta1y, float *Eta2y, float Dt, int nx, int ny);
+
   __global__ void ac2dstress(float Dt, float *Kappa, float *p, float *gammax,
-                            float *gammay, float *Dkappax, float * Dkappay,
-                            float *exx, float *eyy,
-                            float *Alpha1x, float *Alpha2x, float *Alpha1y, float *Alpha2y, int nx, int ny);
+       float *gammay, float *Dkappax, float * Dkappay,
+       float *exx, float *eyy,
+       float *Alpha1x, float *Alpha2x, float *Alpha1y, float *Alpha2y, int nx, int ny);
+
 // Public functions
 
 // Ac2dNew creates a new Ac2d object
@@ -73,7 +76,8 @@ extern "C"
   return(Ac2d);
 }
 // Ac2dSolve computes the solution of the acoustic wave equation.
-// The acoustic equation of motion are integrated using Virieux's (1986) stress-velocity scheme.
+// The acoustic equation of motion are integrated using Virieux's (1986) 
+// stress-velocity scheme.
 // (See the notes.tex file in the Doc directory).
 // 
 //     vx(t+dt)   = dt/rhox d^+x[ sigma(t)] + dt fx + vx(t)
@@ -100,7 +104,8 @@ extern "C"
 //    Rec  : Receiver object
 //    nt   : Number of timesteps to do starting with current step  
 //    l    : The differentiator operator length
-int Ac2dSolve(struct ac2d *Ac2d, struct model *Model, struct src *Src, struct rec *Rec,int nt,int l)
+int Ac2dSolve(struct ac2d *Ac2d, struct model *Model, struct src *Src, 
+              struct rec *Rec,int nt,int l)
 {
   int sx,sy;         // Source x,y-coordinates 
   struct diff *Diff;  // Differentiator object
@@ -124,9 +129,9 @@ int Ac2dSolve(struct ac2d *Ac2d, struct model *Model, struct src *Src, struct re
     // Compute spatial derivative of stress
     // Use exx and eyy as temp storage
     DiffDxplus(Diff,Ac2d->p,Ac2d->exx,Model->Dx,Nx,Ny); // Forward differentiation x-axis
-    Ac2dvx(Ac2d,Model);                        // Compute vx
+    Ac2dvx(Ac2d,Model);                                 // Compute vx
     DiffDyplus(Diff,Ac2d->p,Ac2d->eyy,Model->Dx,Nx,Ny); // Forward differentiation y-axis
-    Ac2dvy(Ac2d,Model);                        // Compute vy
+    Ac2dvy(Ac2d,Model);                                 // Compute vy
 
     DiffDxminus(Diff,Ac2d->vx,Ac2d->exx,Model->Dx,Nx,Ny); //Compute exx     
     DiffDyminus(Diff,Ac2d->vy,Ac2d->eyy,Model->Dx,Nx,Ny); //Compute eyy   
@@ -155,12 +160,14 @@ int Ac2dSolve(struct ac2d *Ac2d, struct model *Model, struct src *Src, struct re
    }
 
     //Record wavefield
-    //DEBUG
-    //RecReceiver(Rec,i,Ac2d->p,Nx,Ny); 
+    if(Rec->recon == OK){
+      RecReceiver(Rec,i,Ac2d->p,Nx,Ny); 
+    }
 
     // Record Snapshots
-    // DEBUG
-    //RecSnap(Rec,i,Ac2d->p,Nx,Ny);
+    if(Rec->snpon == OK){
+      RecSnap(Rec,i,Ac2d->p,Nx,Ny);
+    }
   }
   return(OK);
 }

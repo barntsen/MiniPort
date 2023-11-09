@@ -1,3 +1,5 @@
+// Ac2dmod - mini application for testing manual meory
+// on AMD GPUs
 
 extern "C" {
   #include <stdio.h>                 /* Library interface                 */
@@ -44,8 +46,8 @@ int main()
 
   t0 = Clock();
   // Main modeling parameters
-  Nx=251; // x-dimensiom
-  Ny=251; // y-dimension
+  Nx=256; // x-dimensiom
+  Ny=256; // y-dimension
   dx=5.0; // grid interval
   dt=0.0005; // Time sampling
   nt=1501;   // No of timesteps
@@ -112,7 +114,7 @@ int main()
   char snpfile [] ="snp.bin";
   Rec= RecNew(rx,ry,ntr,resamp,sresamp,snpfile,Nr);
   Rec->snpon =ERR;
-  Rec->recon =ERR;
+  Rec->recon =OK;
 
   /* Create solver    */
   Ac2d = Ac2dNew(Model);
@@ -127,7 +129,7 @@ int main()
 
 
   printf("Nx : %d \n", Nx);
-  printf("Nt : %d \n", Ny);
+  printf("Ny : %d \n", Ny);
   printf("Nt : %d \n", nt);
   printf("Solver time : %f \n",Clock()-t1); 
   printf("Wall   time : %f \n",Clock()-t0); 

@@ -1,4 +1,4 @@
-// Src object
+// Src object methods
 
 // Imports
 #include<stdlib.h>

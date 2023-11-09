@@ -12,10 +12,10 @@ struct rec
     int Nx;        // Size of p 1st dim
     int Ny;        // Size of p 2nd dim
     float *wrk;    // Work array
-    int   resamp;  // Resample factor for receivers
-    int   sresamp; // Resample factor for snapshots
+    int resamp;    // Resample factor for receivers
+    int sresamp;   // Resample factor for snapshots
     int recon;     // =OK Record data =OFF No data recorded
-    int snopn;     // =OK Record snapshots =OFF Do not record snapshots
+    int snpon;     // =OK Record snapshots =OFF Do not record snapshots
     int pit;       // Next time sample to be recorded
 };
 

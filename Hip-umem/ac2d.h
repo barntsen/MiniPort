@@ -1,5 +1,4 @@
 // Ac2D is the acoustic modeling object
-//=====================================
 
 struct ac2d {
   float * p;     // Stress 
@@ -14,11 +13,11 @@ struct ac2d {
   int ts;             // Timestep no
 };
 
+// Methods
+
 // Ac2dNew creates a new Ac2d object
-//
   struct ac2d *Ac2dNew(struct model *Model);
 
 // Ac2dSolve computes the pressure at the next timestep
-//
    int Ac2dSolve(struct ac2d *Ac2d, struct model *Model,struct src *Src, 
                  struct rec *Rec,int nt, int l);

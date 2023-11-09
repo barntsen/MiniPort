@@ -11,4 +11,4 @@
 #SBATCH --account=project_465000260  # Project for billing
 ###SBATCH --mail-user=username@domain.com
 
-./runall.sh
+./run.sh

@@ -1,4 +1,4 @@
-// Model is the model object.
+// Model struct
 struct model {
 int Nx,Ny;
 int Nb;
@@ -24,7 +24,7 @@ float Dx;
 float Dt;
 
 };
-// Methods for the model object
+// Methods for the model struct
 
 // ModelNew creates a new Model obejct
 struct model *ModelNew(float *kappa, float *rho, float *Q,

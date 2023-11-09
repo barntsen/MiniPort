@@ -12,5 +12,4 @@ hipcc -O3  $opt -c gpu.cpp
 
 ar cr libac2d.a ac2d.o diff.o model.o rec.o src.o util.o gpu.o
 
-#Debugging
-#hipcc  -o ac2dmod ac2dmod.o ac2d.o model.o rec.o src.o util.o diff.o gpu.o 
+hipcc  -o ac2dmod ac2dmod.o ac2d.o model.o rec.o src.o util.o diff.o gpu.o 

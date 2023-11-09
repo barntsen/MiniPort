@@ -6,6 +6,7 @@
 #include "gpu.h"
 #include "rec.h"
 #include "util.h"
+#include "hip/hip_runtime.h"
 // RecNew is the constructor for receiver objects.
 //
 // Arguments:
@@ -27,6 +28,8 @@ struct rec *RecNew(int *rx, int *ry, int nt,
   int i,j;
 
   Rec = (struct rec *)GpuNew(sizeof(struct rec));
+  Rec->recon = OK;
+  Rec->snpon =ERR;
   Rec->nr = nr;
   Rec->rx = rx;
   Rec->ry = ry;

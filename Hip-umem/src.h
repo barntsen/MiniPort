@@ -6,6 +6,7 @@ struct src
   int *Sy;
   int Ns;
 };
+
 // SrcNew creates a new source object
 struct src *SrcNew(float *source, int nsrc, int * sx, int * sy, int ns);
 
