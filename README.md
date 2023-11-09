@@ -1,7 +1,7 @@
 
 # MiniPort 
 
-MiniPort contains two simple mini applications written in C for
+MiniPort contains two simple mini applications written in C/hip for
 running on the Mi250x GPU. The mini applications solve the
 acoustic wave equation using a simple finite-difference approach.
 The purpose is to compare the performance of using managed versus

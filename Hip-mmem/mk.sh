@@ -1,5 +1,4 @@
 #!/bin/sh
-opt=
 
 hipcc -O3  $opt -c ac2dmod.cpp
 hipcc -O3  $opt -c ac2d.cpp
